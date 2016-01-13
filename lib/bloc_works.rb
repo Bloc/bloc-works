@@ -2,6 +2,7 @@ require "bloc_works/version"
 require "bloc_works/router"
 require "bloc_works/utility"
 require "bloc_works/dependencies"
+require "bloc_works/controller"
 
 module BlocWorks
   class Application
@@ -14,12 +15,6 @@ module BlocWorks
       controller = klass.new(env)
       text = controller.send(action)
       [200, {'Content-Type' => 'text/html'}, [text]]
-    end
-  end
-
-  class Controller
-    def initialize(env)
-      @env = env
     end
   end
 end
