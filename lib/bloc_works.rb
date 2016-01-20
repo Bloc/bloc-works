@@ -13,9 +13,14 @@ module BlocWorks
 
       klass, action = controller_and_action(env)
       controller = klass.new(env)
-      p action
       text = controller.send(action)
-      [200, {'Content-Type' => 'text/html'}, [text]]
+
+      if controller.has_response?
+        status, header, response = controller.get_response
+        [status, header, [response.body].flatten]
+      else
+        [200, {'Content-Type' => 'text/html'}, [text]]
+      end
     end
   end
 end
